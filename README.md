@@ -19,7 +19,7 @@
 
 [forgit](https://github.com/wfxr/forgit) — the interactive `git` + `fzf` utility — ported to a **native [zshrs](https://github.com/MenkeTechnologies/zshrs) plugin**. Instead of shell functions parsed on every startup, the commands are compiled Rust builtins in a `cdylib` loaded through zshrs's stable plugin ABI with `zmodload -R`.
 
-### [`zshrs`](https://github.com/MenkeTechnologies/zshrs) &middot; [`znative`](https://github.com/MenkeTechnologies/zshrs/blob/main/docs/ZPM.md) &middot; [`upstream`](https://github.com/wfxr/forgit)
+### [`zshrs`](https://github.com/MenkeTechnologies/zshrs) &middot; [`znative`](https://github.com/MenkeTechnologies/zshrs/blob/main/docs/ZNATIVE.md) &middot; [`upstream`](https://github.com/wfxr/forgit)
 
 ---
 
@@ -47,7 +47,7 @@ Requires `git` and `fzf` on `PATH` (same runtime deps as upstream forgit). `delt
 znative load MenkeTechnologies/zshrs-forgit
 ```
 
-Put that one line in your `.zshrc`. [znative](https://github.com/MenkeTechnologies/zshrs/blob/main/docs/ZPM.md), zshrs's package manager, installs the plugin on the first shell start — clones it, runs `cargo build --release`, and `zmodload -R`s the resulting `libforgit` — then loads it from the store, zero-network, on every start after. No separate install step.
+Put that one line in your `.zshrc`. [znative](https://github.com/MenkeTechnologies/zshrs/blob/main/docs/ZNATIVE.md), zshrs's package manager, installs the plugin on the first shell start — clones it, runs `cargo build --release`, and `zmodload -R`s the resulting `libforgit` — then loads it from the store, zero-network, on every start after. No separate install step.
 
 ### Manual build
 
