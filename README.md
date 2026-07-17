@@ -24,17 +24,18 @@ Requires `git` and `fzf` on `PATH` (same runtime deps as upstream forgit).
 
 ## Install
 
-With **zpm** (zshrs's package manager):
-
 ```sh
-zpm add MenkeTechnologies/zshrs-forgit
+zpm load MenkeTechnologies/zshrs-forgit
 ```
 
-`zpm` clones the repo, runs `cargo build --release`, and `zmodload -R`s the
-resulting `libforgit` — then `ga`, `glo`, … are live commands. To load it at
-startup, add `zpm load forgit` to your `.zshrc`.
+Put that one line in your `.zshrc`.
+[zpm](https://github.com/MenkeTechnologies/zshrs/blob/main/docs/ZPM.md),
+zshrs's package manager, installs the plugin on the first shell start — clones
+it, runs `cargo build --release`, and `zmodload -R`s the resulting `libforgit`
+— then loads it from the store, zero-network, on every start after. No
+separate install step; `ga`, `glo`, … are live commands.
 
-## Build manually
+### Manual build
 
 ```sh
 cargo build --release
