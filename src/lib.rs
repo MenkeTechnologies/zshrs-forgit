@@ -77,7 +77,9 @@ fn git_config(key: &str) -> Option<String> {
 }
 
 fn toplevel() -> String {
-    git_capture(&["rev-parse", "--show-toplevel"]).trim().to_string()
+    git_capture(&["rev-parse", "--show-toplevel"])
+        .trim()
+        .to_string()
 }
 
 /// Spawn `fzf`, feed `input` on its stdin, return the selected lines
@@ -242,7 +244,10 @@ fn grh(host: &Host, _args: &Args) -> c_int {
         host.print("Nothing to unstage.\n");
         return 0;
     }
-    let preview = format!("git diff --cached --color=always -- {{}} | {}", ctx.diff_pager);
+    let preview = format!(
+        "git diff --cached --color=always -- {{}} | {}",
+        ctx.diff_pager
+    );
     let opts = format!("{}\n-m -0", ctx.base_opts);
     let Some(sel) = fzf(&list, &opts, Some(&preview)) else {
         host.print("Nothing to unstage.\n");
@@ -373,7 +378,10 @@ fn gd(host: &Host, args: &Args) -> c_int {
                 .map(|s| s.success())
                 .unwrap_or(false) =>
         {
-            (first.clone(), rest[1..].iter().map(String::as_str).collect())
+            (
+                first.clone(),
+                rest[1..].iter().map(String::as_str).collect(),
+            )
         }
         _ => (String::new(), rest.iter().map(String::as_str).collect()),
     };
@@ -502,7 +510,9 @@ fn gi(host: &Host, args: &Args) -> c_int {
         all.sort_unstable_by_key(|s| s.to_lowercase());
         all.dedup();
         let ctx = Ctx::new(host);
-        let preview = format!("cat '{templates}/'{{}}'.gitignore' 2>/dev/null || cat '{templates}/'{{}} 2>/dev/null");
+        let preview = format!(
+            "cat '{templates}/'{{}}'.gitignore' 2>/dev/null || cat '{templates}/'{{}} 2>/dev/null"
+        );
         let opts = format!("{}\n-m --preview-window=right:70%", ctx.base_opts);
         let Some(sel) = fzf(&all.join("\n"), &opts, Some(&preview)) else {
             return 1;
@@ -528,7 +538,9 @@ fn gi(host: &Host, args: &Args) -> c_int {
                 out.push_str(&format!("### {header}\n{body}\n"));
             }
         } else {
-            host.print(&format!("[Warn] No gitignore template found for '{item}'.\n"));
+            host.print(&format!(
+                "[Warn] No gitignore template found for '{item}'.\n"
+            ));
         }
     }
     host.print(&out);
