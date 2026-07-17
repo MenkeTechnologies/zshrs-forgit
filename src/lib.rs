@@ -498,17 +498,13 @@ fn gi(host: &Host, args: &Args) -> c_int {
     // Requested templates, or fzf-pick when none given.
     let mut names: Vec<String> = args.rest().iter().cloned().collect();
     if names.is_empty() {
-        let mut all: Vec<String> = std::fs::read_dir(&templates)
+        let entries: Vec<String> = std::fs::read_dir(&templates)
             .into_iter()
             .flatten()
             .flatten()
-            .filter_map(|e| {
-                let n = e.file_name().to_string_lossy().into_owned();
-                Some(n.strip_suffix(".gitignore").unwrap_or(&n).to_string())
-            })
+            .map(|e| e.file_name().to_string_lossy().into_owned())
             .collect();
-        all.sort_unstable_by_key(|s| s.to_lowercase());
-        all.dedup();
+        let all = normalize_template_names(entries);
         let ctx = Ctx::new(host);
         let preview = format!(
             "cat '{templates}/'{{}}'.gitignore' 2>/dev/null || cat '{templates}/'{{}} 2>/dev/null"
@@ -561,4 +557,42 @@ declare_plugin! {
         "gcp"    => gcp,
         "gi"     => gi,
     },
+}
+
+/// From gitignore template filenames: strip the `.gitignore` suffix, sort
+/// case-insensitively, and drop adjacent duplicates. Extracted from `gi` so
+/// the name munging is unit-testable without git/fzf.
+fn normalize_template_names(mut names: Vec<String>) -> Vec<String> {
+    for n in names.iter_mut() {
+        if let Some(stripped) = n.strip_suffix(".gitignore") {
+            *n = stripped.to_string();
+        }
+    }
+    names.sort_unstable_by_key(|s| s.to_lowercase());
+    names.dedup();
+    names
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalize_template_names_strip_sort_dedup() {
+        let got = normalize_template_names(vec![
+            "Rust.gitignore".into(),
+            "go.gitignore".into(),
+            "Node".into(),
+            "go.gitignore".into(),
+        ]);
+        // .gitignore stripped; case-insensitive sort (go, node, rust);
+        // adjacent duplicates removed.
+        assert_eq!(got, vec!["go", "Node", "Rust"]);
+    }
+
+    #[test]
+    fn normalize_template_names_keeps_bare_names() {
+        let got = normalize_template_names(vec!["Global".into(), "macOS.gitignore".into()]);
+        assert_eq!(got, vec!["Global", "macOS"]);
+    }
 }

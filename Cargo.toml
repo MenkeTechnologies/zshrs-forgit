@@ -6,7 +6,7 @@ publish = false
 description = "forgit (git+fzf) ported to a native zshrs plugin"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 znative = "0.12"
