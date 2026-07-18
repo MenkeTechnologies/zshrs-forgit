@@ -23,6 +23,7 @@
 //!   gi      gitignore generator             (forgit::ignore)
 //!
 //! Requires `git` and `fzf` on PATH (same runtime deps as forgit).
+#![allow(clippy::not_unsafe_ptr_arg_deref)]
 
 use std::io::Write;
 use std::os::raw::c_int;
@@ -453,7 +454,7 @@ fn gcp(host: &Host, args: &Args) -> c_int {
     // `+ <sha> <subject>` -> drop the leading marker (cut -d' ' -f2-).
     let mut list = String::new();
     for line in raw.lines() {
-        let rest = line.splitn(2, ' ').nth(1).unwrap_or(line);
+        let rest = line.split_once(' ').map_or(line, |(_, r)| r);
         list.push_str(rest);
         list.push('\n');
     }
@@ -496,7 +497,7 @@ fn gi(host: &Host, args: &Args) -> c_int {
     }
 
     // Requested templates, or fzf-pick when none given.
-    let mut names: Vec<String> = args.rest().iter().cloned().collect();
+    let mut names: Vec<String> = args.rest().to_vec();
     if names.is_empty() {
         let entries: Vec<String> = std::fs::read_dir(&templates)
             .into_iter()

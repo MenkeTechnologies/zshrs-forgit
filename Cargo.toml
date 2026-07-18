@@ -4,6 +4,9 @@ version = "0.1.1"
 edition = "2021"
 publish = false
 description = "forgit (git+fzf) ported to a native zshrs plugin"
+authors = ["MenkeTechnologies"]
+repository = "https://github.com/MenkeTechnologies/zshrs-forgit"
+homepage = "https://github.com/MenkeTechnologies/zshrs-forgit"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
