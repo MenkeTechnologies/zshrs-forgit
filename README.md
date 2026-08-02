@@ -37,7 +37,7 @@
 
 `ga`, `glo`, `gd`, … the whole forgit command set, running as native machine code with no per-startup sourcing. Orchestration, argument handling, and sequencing are Rust; `git` and `fzf` run as subprocesses exactly as upstream.
 
-Requires `git` and `fzf` on `PATH` (same runtime deps as upstream forgit). `delta` / `diff-so-fancy` are used for diff rendering when present.
+Requires `git` and `fzf` on `PATH` (same runtime deps as upstream forgit). Diffs are rendered through whatever pager you configure — `$FORGIT_PAGER`, else `git config core.pager`, else `cat` — so pointing that at `delta` or `diff-so-fancy` works, but neither is auto-detected.
 
 ---
 
@@ -72,6 +72,19 @@ ga
 | `gss`    | stash viewer                        |
 | `gcp`    | cherry-pick selector                |
 | `gi`     | `.gitignore` template generator     |
+
+### Environment
+
+| variable                   | effect                                                                |
+| -------------------------- | --------------------------------------------------------------------- |
+| `FORGIT_PAGER`             | pager for all diff output; falls back to `git config core.pager`, then `cat` |
+| `FORGIT_SHOW_PAGER`        | pager for `git show`; falls back to `git config pager.show`, then `$FORGIT_PAGER` |
+| `FORGIT_DIFF_PAGER`        | pager for `git diff`; falls back to `git config pager.diff`, then `$FORGIT_PAGER` |
+| `FORGIT_FZF_DEFAULT_OPTS`  | appended to the built-in fzf option block (after `$FZF_DEFAULT_OPTS`)  |
+| `FORGIT_COPY_CMD`          | command used to copy a selection to the clipboard                     |
+| `FORGIT_GI_REPO_REMOTE`    | `.gitignore` template repo URL used by `gi`                           |
+| `FORGIT_GI_REPO_LOCAL`     | local clone path for that template repo                               |
+| `FORGIT_GI_TEMPLATES`      | subdirectories inside the template repo to search                     |
 
 ---
 

@@ -546,7 +546,7 @@ fn gi(host: &Host, args: &Args) -> c_int {
 
 declare_plugin! {
     name: "forgit",
-    version: "0.1.0",
+    version: "0.1.1",
     builtins: {
         "ga"     => ga,
         "grh"    => grh,
