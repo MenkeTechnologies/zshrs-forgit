@@ -1,6 +1,6 @@
 [package]
 name = "forgit"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 publish = false
 description = "Native zshrs plugin porting forgit (git+fzf)"
@@ -12,4 +12,4 @@ homepage = "https://github.com/MenkeTechnologies/zshrs-forgit"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-znative = "0.12"
+znative = "0.13"
