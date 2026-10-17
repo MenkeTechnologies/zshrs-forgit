@@ -81,10 +81,10 @@ ga
 | `FORGIT_SHOW_PAGER`        | pager for `git show`; falls back to `git config pager.show`, then `$FORGIT_PAGER` |
 | `FORGIT_DIFF_PAGER`        | pager for `git diff`; falls back to `git config pager.diff`, then `$FORGIT_PAGER` |
 | `FORGIT_FZF_DEFAULT_OPTS`  | appended to the built-in fzf option block (after `$FZF_DEFAULT_OPTS`)  |
-| `FORGIT_COPY_CMD`          | command used to copy a selection to the clipboard                     |
-| `FORGIT_GI_REPO_REMOTE`    | `.gitignore` template repo URL used by `gi`                           |
-| `FORGIT_GI_REPO_LOCAL`     | local clone path for that template repo                               |
-| `FORGIT_GI_TEMPLATES`      | subdirectories inside the template repo to search                     |
+| `FORGIT_COPY_CMD`          | command used to copy a selection to the clipboard (default `pbcopy`) |
+| `FORGIT_GI_REPO_REMOTE`    | `.gitignore` template repo URL used by `gi` (default `https://github.com/dvcs/gitignore`) |
+| `FORGIT_GI_REPO_LOCAL`     | local clone path for that template repo (default `~/.forgit/gi/repos/dvcs/gitignore`) |
+| `FORGIT_GI_TEMPLATES`      | template directory (default `$FORGIT_GI_REPO_LOCAL/templates`) |
 
 ---
 
